@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
-from backend import member_data, post_data, comments_data
+from backend import mongodata
 
 app=Flask(__name__)
 
@@ -16,9 +16,9 @@ def home():
     if 'comment_index' not in session:
         session['comment_index']=0
     if request.method=="POST":
-        post_data.addPost(request.form['story'],request.form['title'],session['username'])
-    post=post_data.showPosts();
-    post.reverse();
+        mongodata.addPost(request.form['story'],request.form['title'],session['username'])
+    print session['post_til']
+    post=mongodata.showPosts().sort('$natural', -1);
     return render_template('home.html',s=session,posts=post)
 
 @app.route('/make_comment',methods=["GET","POST"])
@@ -27,15 +27,16 @@ def make_the_goddamn_comment():
         theUname = int(post_data.findhuman(session['username']))
         thepostnum = int(session['post_id'])
         thecomment = request.form['thecomment']
-        comments_data.addcomment(theUname,thepostnum,thecomment)
-        session['comments']=comments_data.findPost(session['post_id'])
+        mongodata.addcomment(theUname,thepostnum,thecomment)
+        session['comments']=mongodata.findPost(session['post_id'])
     return redirect("/")
 
 @app.route('/rm_post',methods=["GET","POST"])
 def rm_this_post():
     if request.method=="POST":
+        print request.form
         the_post_id = request.form['post_id']
-        post_data.removePost(int(the_post_id))
+        mongodata.removePost(int(the_post_id))
         return redirect("/home")
 
 @app.route('/add_more_posts/')
