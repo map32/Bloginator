@@ -1,10 +1,6 @@
 import os, sqlite3, csv, random 
-from pymongo import MongoClient
 
-#ok let's get 2 writing the neato functions m8ies
-#it's not like I need to get to gold or anything
-
-'''
+db_name = "membersData.db"
 
 def go():
 
@@ -88,5 +84,3 @@ def checkPass(uname, passwd):
 
 go()    
 #check()
-
-'''

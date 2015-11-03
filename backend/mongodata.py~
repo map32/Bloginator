@@ -30,29 +30,24 @@ def checkPass(user, password):
 
 # POSTS/COMMENTS
 
-def showPosts():
+def postCheck():
     for r in posts.find():
-        print r
+	print r
 
 def addPost(post, title, user):
-    posts.insert_one({'post': post, 'title': title, 'user': user, 'id': makeID(), 'comments': []})
+    posts.insert_one({'post': post, 'title': title, 'user': user, 'id': makeID()})
 
-def findPost(id):
-    return posts.find_one({'id': id})
-    
 def removePost(pi):
     posts.delete_one({'id': pi})
+    
+def showPosts():
+    return posts.find()
 
 def makeID():
-    num = random.randint(100,999)
-    for x in posts.find():
-        if x['id'] == num:
-            makeID()
-        else:
-            return num
-    return num
-
-def addComment(user, post, info):
-    posts.update_one({'id': post}, {'$push': {'comments': {'user': user, 'info': info}}}, upsert = False)
-        
+     num = random.randint(100,999)
+     for x in posts.find():
+          if x['id'] == num:
+               makeID()
+          else:
+               return num
 
