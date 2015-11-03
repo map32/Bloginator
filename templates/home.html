@@ -88,7 +88,7 @@
                     {% if (item['user'] == s.username): %}
                     <br>
 		    <form action="/rm_post" method="POST">
-		    <input type="hidden" name="post_id" value={{item[4]}}>
+		    <input type="hidden" name="post_id" value={{item['user']}}>
 		    <input type="hidden" name="comment_name" value={{item[2]}}>
 		    <input type="hidden" name="comment_text" value={{item[1]}}>
 		    <input type="submit" name="button" value="Remove Post">

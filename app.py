@@ -17,7 +17,8 @@ def home():
         session['comment_index']=0
     if request.method=="POST":
         mongodata.addPost(request.form['story'],request.form['title'],session['username'])
-    post=mongodata.showPosts();
+    print session['post_til']
+    post=mongodata.showPosts().sort('$natural', -1);
     return render_template('home.html',s=session,posts=post)
 
 @app.route('/make_comment',methods=["GET","POST"])
@@ -33,6 +34,7 @@ def make_the_goddamn_comment():
 @app.route('/rm_post',methods=["GET","POST"])
 def rm_this_post():
     if request.method=="POST":
+        print request.form
         the_post_id = request.form['post_id']
         mongodata.removePost(int(the_post_id))
         return redirect("/home")
