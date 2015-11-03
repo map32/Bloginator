@@ -1,12 +1,15 @@
+{% extends "home.html" %}
+
 <!DOCTYPE html>
+{% block header %}
 <head>
   <link  type="text/css" rel="stylesheet" href="static/template00.css">
   <title>Login</title>
 </head>
-<div id="layout" class="pure-g">
-  <div class="sidebar pure-u-1 pure-u-md-1-4">
-    <div class="header">
-      <h1>Bloginator</h1>
+{% endblock %}
+{% block sidebarstart %}
+{{ super() }}
+{% endblock %}
       {% if error!=None %}
       <h2>{{error}}</h2>
       {% endif %}
@@ -16,9 +19,9 @@
           <li class="nav-item">
             <a class="pure-button" href="/home">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="pure-button" href="/logout">De-Login</a>
-          </li>
+          {% block delogbutton %}
+          {{super()}}
+          {% endblock %}
         </ul>
       </nav>
       {% else %}
@@ -28,14 +31,12 @@
 	<input type="submit" name="button" value="login">  <input type="submit" name="button" value="New Account"> 
       </form>
       {% endif %}
-
-      <div class="footer">
-        <div class="pure-menu pure-menu-horizontal">
-          <ul>
+{% block footerstart %}
+      {{super()}}
+{% endblock %}
             <li class="pure-menu-item"><a href="#">About</a></li>
             <li class="pure-menu-item"><a href="https://github.com/hfilosa/Bloginator" class="pure-menu-link">GitHub</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+          {% block close %}
+          {{super()}}
+          {% endblock %}
+ 
