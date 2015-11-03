@@ -31,14 +31,13 @@ def checkPass(user, password):
 # POSTS/COMMENTS
 
 def showPosts():
-    for r in posts.find():
-        print r
+    return posts.find({}, {"_id": False})
 
 def addPost(post, title, user):
     posts.insert_one({'post': post, 'title': title, 'user': user, 'id': makeID(), 'comments': []})
 
-def findPost(id):
-    return posts.find_one({'id': id})
+def findPost(idd):
+    return posts.find_one({'id': idd})
     
 def removePost(pi):
     posts.delete_one({'id': pi})
@@ -56,3 +55,4 @@ def addComment(user, post, info):
     posts.update_one({'id': post}, {'$push': {'comments': {'user': user, 'info': info}}}, upsert = False)
         
 
+addPost("text","title","user")

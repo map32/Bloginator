@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
-from backend import member_data, post_data, comments_data
+from backend import mongodata
 
 app=Flask(__name__)
 
@@ -16,9 +16,8 @@ def home():
     if 'comment_index' not in session:
         session['comment_index']=0
     if request.method=="POST":
-        post_data.addPost(request.form['story'],request.form['title'],session['username'])
-    post=post_data.showPosts();
-    post.reverse();
+        mongodata.addPost(request.form['story'],request.form['title'],session['username'])
+    post=mongodata.showPosts();
     return render_template('home.html',s=session,posts=post)
 
 @app.route('/make_comment',methods=["GET","POST"])
@@ -28,7 +27,7 @@ def make_the_goddamn_comment():
         thepostnum = int(session['post_id'])
         thecomment = request.form['thecomment']
         comments_data.addcomment(theUname,thepostnum,thecomment)
-        session['comments']=comments_data.findPost(session['post_id'])
+        session['comments']=mongodata.findPost(session['post_id'])
     return redirect("/")
 
 @app.route('/rm_post',methods=["GET","POST"])
