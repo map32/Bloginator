@@ -52,7 +52,7 @@ def makeID():
     return num
 
 def addComment(user, post, info):
-    posts.update_one({'id': post}, {'$push': {'comments': {'user': user, 'info': info}}}, upsert = False)
+    posts.update_one({'id': post}, {'$push': {'comments': {'user': user, 'info': info}}}, upsert = True)
         
 
-addPost("hi im a person","post 1","my_name")
+#addPost("hi im a person","post 1","my_name")

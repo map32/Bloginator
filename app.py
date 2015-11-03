@@ -24,11 +24,12 @@ def home():
 @app.route('/make_comment',methods=["GET","POST"])
 def make_the_goddamn_comment():
     if request.method=="POST":
-        theUname = int(post_data.findhuman(session['username']))
+        theUname = session['username']
         thepostnum = int(session['post_id'])
         thecomment = request.form['thecomment']
-        mongodata.addcomment(theUname,thepostnum,thecomment)
-        session['comments']=mongodata.findPost(session['post_id'])
+        mongodata.addComment(theUname,thepostnum,thecomment)
+        print mongodata.findPost(thepostnum)
+        #session['comments']=mongodata.findPost(session['post_id'])
     return redirect("/")
 
 @app.route('/rm_post',methods=["GET","POST"])
@@ -61,15 +62,15 @@ def login():
     #If the user is trying to log in, verify password
     if request.method=="POST":
         if (request.form['button']=="New Account"):
-            if (member_data.filterUname(request.form['username'])):
-                member_data.addMember(request.form['username'], request.form['password'])
+            if (mongodata.filterUname(request.form['username'])):
+                mongodata.addMember(request.form['username'], request.form['password'])
                 session['logged']=True
                 session['username']=request.form['username']
                 return redirect('/')
             else:
                 return render_template('login.html',s=session,error="Username already taken")
         if (request.form['button']=="login"):
-            if member_data.checkPass(request.form['username'], request.form['password']):
+            if mongodata.checkPass(request.form['username'], request.form['password']):
                 session['logged']=True
                 session['username']=request.form['username']
                 return redirect('/')
@@ -88,8 +89,8 @@ def comment():
     if (session['logged']!=True):
         return redirect('/login')
     session['in_comments']=True
-    session['comments']=comments_data.findPost(int(request.form['post_id']))
-    print session['comments']
+    #session['comments']=mongodata.findPost(int(request.form['post_id']))
+    #print session['comments']
     session['post_id']=int(request.form['post_id'])
     session['comment_name']=request.form['comment_name']
     session['comment_text']=request.form['comment_text']
