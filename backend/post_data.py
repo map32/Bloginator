@@ -107,4 +107,4 @@ def find(user):
 
 
 start()
-showPosts()
+#showPosts()
