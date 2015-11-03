@@ -1,48 +1,45 @@
 import csv, pymongo, random
 from pymongo import MongoClient
+import datetime
 
-client = MongoClient()
-db_name = "data"
-userCollection = "users"
-postCollection = "posts"
+conn = MongoClient()
+db = conn['data']
+users = db['members']
 
-db = client[db_name]
-users = db.userCollection
-posts = db.postCollection
+# USERS
 
 def addMember(user, password):
-    if users.find_one({"username": user}) == None:
-        users.insert_one({"username": user, "password": password})
-
+    if users.find_one({"name": user}) == None:
+        users.insert_one({"name": user, "password": password, "posts": []})
+#????
 def check():
     for r in users.find():
         print r
 
+#????
 def filterUname(user):
-    return users.find_one({"username": user}) == None
+    return users.find_one({"name": user}) == None
 
+#need to test
 def checkPass(user, password):
-    return users.find_one({"username": user}) != None and users.find_one({"username": user})["password"] == password
+    return users.find_one({"name": user}) != None and users.find_one({"username": user})["password"] == password
 
 
-
-
-
-# POSTS/COMMENTS
+# POSTS
 
 def showPosts():
-    for r in posts.find():
-        print r
+    users.find({},{"posts":true, "_id":false})
 
-def addPost(post, title, user):
-    posts.insert_one({'post': post, 'title': title, 'user': user, 'id': makeID(), 'comments': []})
+def addPost(user, titl, txt, idd):
+    users.update_one({'name': user}, {'$push': {'posts': {'title': titl, 'text': txt, 'created':str(datetime.datetime.now()), 'id':idd, 'comments':[{}]}}}, upsert = False)
 
-def findPost(id):
-    return posts.find_one({'id': id})
+def findPost(postid):
+    return users.find_one({'id': postid})
     
-def removePost(pi):
-    posts.delete_one({'id': pi})
+def removePost(user, postid):
+    users.update_one({'name': user}, {'$pull': {'posts': {'id': postid}}})
 
+#need
 def makeID():
     num = random.randint(100,999)
     for x in posts.find():
@@ -52,7 +49,19 @@ def makeID():
             return num
     return num
 
-def addComment(user, post, info):
-    posts.update_one({'id': post}, {'$push': {'comments': {'user': user, 'info': info}}}, upsert = False)
-        
+# COMMENTS
+#need
+def findComment(user, postid):
+    return
 
+def addComment(user, postid, txt):
+    users.update_one({'id': postid}, {'$push': {'posts': {'user': user, 'info': info}}}, upsert = False)
+
+#need        
+def removeComment(user, postid, commentid):
+    return
+
+
+#addMember("snl", "fml")
+#addPost("snl", "lllllllllllllllafsashi", "saffmhfmh", 6)
+#removePost("myrseeer", 1)
