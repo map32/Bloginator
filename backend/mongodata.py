@@ -55,4 +55,4 @@ def addComment(user, post, info):
     posts.update_one({'id': post}, {'$push': {'comments': {'user': user, 'info': info}}}, upsert = False)
         
 
-addPost("text","title","user")
+addPost("hi im a person","post 1","my_name")

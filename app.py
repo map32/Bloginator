@@ -26,7 +26,7 @@ def make_the_goddamn_comment():
         theUname = int(post_data.findhuman(session['username']))
         thepostnum = int(session['post_id'])
         thecomment = request.form['thecomment']
-        comments_data.addcomment(theUname,thepostnum,thecomment)
+        mongodata.addcomment(theUname,thepostnum,thecomment)
         session['comments']=mongodata.findPost(session['post_id'])
     return redirect("/")
 
@@ -34,7 +34,7 @@ def make_the_goddamn_comment():
 def rm_this_post():
     if request.method=="POST":
         the_post_id = request.form['post_id']
-        post_data.removePost(int(the_post_id))
+        mongodata.removePost(int(the_post_id))
         return redirect("/home")
 
 @app.route('/add_more_posts/')

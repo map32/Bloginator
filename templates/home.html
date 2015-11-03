@@ -68,15 +68,15 @@
 		<section class="post">
                   <header class="post-header">
 		    
-                    <h2 class="post-title" style="text-align:left; font-style: italic; background:rgb(21, 69, 93); color:white;">{{item[2]}}</h2>
+                    <h2 class="post-title" style="text-align:left; font-style: italic; background:rgb(21, 69, 93); color:white;">{{item['title']}}</h2>
 
                     <p class="post-meta">
-                    By <a class="post-author" href="#">{{item[0]}}</a>
+                    By <a class="post-author" href="#">{{item['user']}}</a>
                 </header>
 
                 <div class="post-description">
                   <p>
-                    {{item[1]}}
+                    {{item['post']}}
 		    <br>
 		    <form action="/comments" method="POST">
 		    <input type="hidden" name="post_id" value="{{item[4]}}">
@@ -85,7 +85,7 @@
 		    <input type="submit" name="button" value="comment">
 		    </form>
                     {% if s.logged %}
-                    {% if (item[0] == s.username): %}
+                    {% if (item['user'] == s.username): %}
                     <br>
 		    <form action="/rm_post" method="POST">
 		    <input type="hidden" name="post_id" value={{item[4]}}>
