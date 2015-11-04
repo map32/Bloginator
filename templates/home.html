@@ -31,7 +31,7 @@
       </nav>
       </div>
   </div>
-{% block viewcomment %}
+{% block comments %}
 <div class="content pure-u-1 pure-u-md-3-4">
 
             <div class="posts">
@@ -56,21 +56,20 @@
 	      
 
 	      {% endfor %}
-	      
-	      {% endblock %}
+	     
 	      
 	      {% else %}
 	      {% if s.logged %}
-	      {% block makecomment %}
 	      <form action="/home" method="POST">
 		<h1 style="text-align:left; font-style: italic; background:rgb(21, 69, 93);">New Post</h1>
 		<textarea rows="1" cols="40" name="title">Title</textarea><br>
 		<textarea rows="5" cols="100" name="story">Blog Text</textarea><br>
 		<input type="submit" name="button" value="Post">
 	      </form>
-	      {% endblock %}
-	      {% block threads %}
+
 	      {% endif %}
+        {% endblock %}
+	      {% block threads %}
               <h1 class="content-subhead" style="color:white;">Recent Threads</h1>
 	      
 	      {% for item in posts %}
