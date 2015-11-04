@@ -37,7 +37,9 @@ def addPost(post, title, user):
     posts.insert_one({'post': post, 'title': title, 'user': user, 'id': makeID(), 'comments': []})
 
 def findPost(idd):
-    return posts.find_one({'id': idd})
+    a = posts.find_one({'id': idd})
+    a['_id'] = str(a['_id'])
+    return a
     
 def removePost(pi):
     posts.delete_one({'id': pi})

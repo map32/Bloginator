@@ -29,7 +29,7 @@ def make_the_goddamn_comment():
         thecomment = request.form['thecomment']
         mongodata.addComment(theUname,thepostnum,thecomment)
         print mongodata.findPost(thepostnum)
-        #session['comments']=mongodata.findPost(session['post_id'])
+        session['comments']=mongodata.findPost(session['post_id'])
     return redirect("/")
 
 @app.route('/rm_post',methods=["GET","POST"])
@@ -89,8 +89,8 @@ def comment():
     if (session['logged']!=True):
         return redirect('/login')
     session['in_comments']=True
-    #session['comments']=mongodata.findPost(int(request.form['post_id']))
-    #print session['comments']
+    session['comments']=mongodata.findPost(int(request.form['post_id']))
+    print session['comments']
     session['post_id']=int(request.form['post_id'])
     session['comment_name']=request.form['comment_name']
     session['comment_text']=request.form['comment_text']

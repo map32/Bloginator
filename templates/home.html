@@ -43,9 +43,9 @@
               </form><br><li class="nav-item">
 	      <a class="pure-button" href="/set_comment_off">Back to home</a>
               </li>
-	      {% for item in s.comments %}
+	      {% for item in s.comments.comments %}
 
-		<p style="text-style:bold;">{{item}}</p><br>
+		<p style="text-style:bold;">{{item['user']}}: {{item['info']}}</p><br>
 
 	      
 
@@ -80,8 +80,8 @@
 		    <br>
 		    <form action="/comments" method="POST">
 		    <input type="hidden" name="post_id" value="{{item['id']}}">
-		    <input type="hidden" name="comment_name" value={{item[2]}}>
-		    <input type="hidden" name="comment_text" value={{item[1]}}>
+		    <input type="hidden" name="comment_name" value="{{item['title']}}">
+		    <input type="hidden" name="comment_text" value="{{item['post']}}">
 		    <input type="submit" name="button" value="comment">
 		    </form>
                     {% if s.logged %}
