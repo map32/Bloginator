@@ -11,12 +11,12 @@
     <div class="header">
       <h1>Bloginator</h1>
 {% endblock %}
+{% block buttons %}
       <h2>Made by A+<br>quality students</h2>
       <nav class="nav">
         <ul class="nav-list">
 	  {% if s.logged %}
           <h2>Welcome back, {{s.username}}!</h2>
-          {% block buttons %}
           <li class="nav-item">
             <a class="pure-button" href="/logout">De-Login</a>
           </li>
